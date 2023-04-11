@@ -1,11 +1,9 @@
-
-
 // Declare variables for the search form and search history
 const searchForm = document.querySelector("#search-form");
 const searchHistory = document.querySelector("#search-history");
 
 // Add an event listener to the search form to handle search requests
-searchForm.addEventListener("submit", function (event)) {
+searchForm.addEventListener("submit", function (event) {
   event.preventDefault(); // prevent form submission
 
   const cityInput = document.querySelector("#city-input");
@@ -72,10 +70,10 @@ searchForm.addEventListener("submit", function (event)) {
     `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=e081906e41053d0045aef1f5836faf73`
   )
     .then((response) => response.json())
-    .then((data) => {
+   // .then((data) => {
       const forecast = document.querySelector("#forecast");
       forecast.innerHTML = ""; // clear previous forecast data
-    
+    })
       // Loop through the forecast data and create HTML elements for each day
 for (let i = 0; i < data.list.length; i += 8) {
     const date = new Date(data.list[i].dt_txt).toLocaleDateString();
@@ -116,5 +114,9 @@ for (let i = 0; i < data.list.length; i += 8) {
     cardBody.appendChild(humidityEl);
     cardBody.appendChild(windEl);
     card.appendChild(cardBody);
-    forecastEl.appendChild(card);
-  };
+    forecast.appendChild(card);
+    }
+  
+  .catch((error) => {
+    console.error("Error fetching forecast data:", error);
+  });
